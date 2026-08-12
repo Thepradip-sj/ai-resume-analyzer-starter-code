@@ -79,6 +79,45 @@ For proTips, give professional advice that would help them in their job search a
 
 Document text:
 {{DOCUMENT_TEXT}}`,
+
+
+ANALYZE_RESUME_WITH_ROLE_PROMPT :`You are an expert resume reviewer and career coach.
+
+Analyze the following resume for someone applying to the role: "{{TARGET_ROLE}}".
+
+Resume text:
+{{DOCUMENT_TEXT}}
+
+Return ONLY valid JSON (no markdown, no commentary) in this exact shape:
+{
+  "overallScore": <number 1-10>,
+  "roleFit": <number 1-10, how well this resume fits the target role>,
+  "summary": "<2-3 sentence overview>",
+  "strengths": ["...", "..."],
+  "improvementAreas": [
+    { "area": "<short title>", "detail": "<what to fix and why>" }
+  ],
+  "missingSkills": ["<skill relevant to the role that's absent from the resume>"],
+  "matchedSkills": ["<skill from the resume that matches the role>"]
+}`,
+
+ EDIT_RESUME_PROMPT : `You are an expert resume writer.
+
+Target role: "{{TARGET_ROLE}}"
+
+Original resume:
+{{DOCUMENT_TEXT}}
+
+Known improvement areas to address:
+{{IMPROVEMENT_AREAS}}
+
+Rewrite the resume to be stronger for this target role — sharpen bullet points with measurable impact, incorporate relevant missing keywords/skills naturally where truthful, and improve clarity and formatting. Do not invent employers, dates, or credentials that aren't implied by the original.
+
+Return ONLY valid JSON (no markdown, no commentary) in this exact shape:
+{
+  "improvedResumeText": "<the full rewritten resume as plain text>",
+  "changesSummary": ["<short bullet describing a change you made>"]
+}`
 };
 
 export const METRIC_CONFIG = [
